@@ -1,0 +1,68 @@
+{
+	"name": "TransformationLayer",
+	"properties": {
+		"activities": [
+			{
+				"name": "DataTransformations",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "silverTable",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "DataTransformations",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_serverless",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "\n\nIF NOT EXISTS (SELECT * from sys.tables t JOIN sys.schemas s on t.schema_id=s.schema_id\nWHERE t.name = 'silverTable' and s.name ='silver')\n\n\n\n    CREATE EXTERNAL TABLE silver.silverTable\n    (\n        OrderID VARCHAR(100),\n        OrderDate VARCHAR(100),\n        CustomerID VARCHAR(100),\n        CustomerName VARCHAR(100),\n        CustomerEmail VARCHAR(100),\n        ProductId VARCHAR(100),\n        ProductName VARCHAR(100),\n        ProductCataegory VARCHAR(100),\n        RegionID VARCHAR(100),\n        Country VARCHAR(100),\n        Quantity VARCHAR(100),\n        UnitPrice VARCHAR(100),\n        TotalAmount VARCHAR(100),\n        Domain VARCHAR(100)\n    )\n    WITH\n    (\n        LOCATION = 'enrichedSales',\n        DATA_SOURCE= silver_source,\n        FILE_FORMAT = PARQUET\n    )",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-11-05T09:31:02Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

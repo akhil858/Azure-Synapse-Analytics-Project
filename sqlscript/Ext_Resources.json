@@ -1,0 +1,17 @@
+{
+	"name": "Ext_Resources",
+	"properties": {
+		"content": {
+			"query": "\n\nCREATE DATABASE SCOPED CREDENTIAL akhil_cred\nWITH IDENTITY = 'Managed identity'\n\n---External data source----\nDROP EXTERNAL DATA SOURCE silver_source\nCREATE EXTERNAL DATA SOURCE silver_source\nWITH\n(\n    LOCATION = 'https://azuredwhake.dfs.core.windows.net/silver/',\n    CREDENTIAL= akhil_cred\n)\n\nCREATE EXTERNAL DATA SOURCE gold_source\nWITH\n(\n    LOCATION = 'https://azuredwhake.dfs.core.windows.net/gold/',\n    CREDENTIAL= akhil_cred\n)\n\n----External file formats------\n\nCREATE EXTERNAL FILE FORMAT parquet\nWITH\n(  \n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\n\nCREATE EXTERNAL FILE FORMAT delta\nWITH\n(  \n    FORMAT_TYPE = DELTA\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SaleesDWH",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

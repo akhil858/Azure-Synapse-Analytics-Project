@@ -1,0 +1,17 @@
+{
+	"name": "silverTable",
+	"properties": {
+		"content": {
+			"query": "\n\nIF NOT EXISTS (SELECT * from sys.tables t JOIN sys.schemas s on t.schema_id=s.schema_id\nWHERE t.name = 'silverTable' and s.name ='silver')\n\n\n\n    CREATE EXTERNAL TABLE silver.silverTable\n    (\n        OrderID VARCHAR(100),\n        OrderDate VARCHAR(100),\n        CustomerID VARCHAR(100),\n        CustomerName VARCHAR(100),\n        CustomerEmail VARCHAR(100),\n        ProductId VARCHAR(100),\n        ProductName VARCHAR(100),\n        ProductCataegory VARCHAR(100),\n        RegionID VARCHAR(100),\n        Country VARCHAR(100),\n        Quantity VARCHAR(100),\n        UnitPrice VARCHAR(100),\n        TotalAmount VARCHAR(100),\n        Domain VARCHAR(100)\n    )\n    WITH\n    (\n        LOCATION = 'enrichedSales',\n        DATA_SOURCE= silver_source,\n        FILE_FORMAT = PARQUET\n    )",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SaleesDWH",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
