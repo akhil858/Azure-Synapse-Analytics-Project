@@ -33,7 +33,7 @@ The project uses a medallion-style layout:
 ### Pipelines
 
 - **`raw_ingestion`** — Copies data from the configured CSV dataset to Parquet in the bronze location.
-- **`TransformationLayer`** — Defines a data-flow activity followed by a SQL script activity for the silver table. The data-flow activity is currently inactive.
+- **`TransformationLayer`** — Defines a data-flow activity followed by a SQL script activity for the silver table.
 
 ### Data Flow
 
