@@ -98,15 +98,3 @@ Azure-Synapse-Analytics-Project/
 ├── publish_config.json # Synapse Git publish configuration
 └── README.md
 ```
-
-## Setup Notes
-
-This repository contains Synapse workspace artifacts rather than a standalone application, so there is no local run command or test suite.
-
-Before using the project:
-
-1. Connect the repository to an Azure Synapse workspace.
-2. Update linked services and datasets for your storage account, file systems, paths, SQL endpoint, and database.
-3. Confirm that the workspace identity has the required access to storage and SQL resources.
-4. Review authentication and credential configuration. Do not commit passwords, tokens, or other secrets.
-5. Validate and publish the artifacts in Synapse Studio.
